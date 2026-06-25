@@ -200,7 +200,6 @@ ax.set_xlabel('H (kA/m)')
 ax.legend(loc='upper left',frameon=True,shadow=True,title='H$_0$ (kA/m)',ncol=2)
 plt.suptitle(f'Ciclos promedio FR \n268 kHz  [57; 6.9] kA/m')
 plt.show()
-#plt.savefig('0_ciclos_promedio_FR_300kHz.png',dpi=300)
 
 fig01, ax =plt.subplots(figsize=(10,7.5),constrained_layout=True,sharey=True,sharex=True)
 for i,e in enumerate(ciclos_FR_213):
@@ -214,7 +213,7 @@ ax.set_xlabel('H (kA/m)')
 ax.legend(loc='upper left',frameon=True,shadow=True,title='H$_0$ (kA/m)',ncol=2)
 plt.suptitle(f'Ciclos promedio FR \n213 kHz  [57; 6.9] kA/m')
 plt.show()
-#%%
+
 fig02, ax =plt.subplots(figsize=(10,7.5),constrained_layout=True,sharey=True,sharex=True)
 for i,e in enumerate(ciclos_FR_135):
     _,_,_, H_FR,M_FR,_ = lector_ciclos(ciclos_FR_135[i])
@@ -250,17 +249,21 @@ axs[0,0].set_title('268 kHz',loc='left')
 axs[0,1].set_title('213 kHz',loc='left')
 axs[1,0].set_title('135 kHz',loc='left')
 axs[1,1].set_title('081 kHz',loc='left')
+
 for i,e in enumerate(ciclos_FR_268):
-    _,_,_, H_FR,M_FR,_ = lector_ciclos(ciclos_FR_268[i])
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
     axs[0,0].plot(H_FR/1000,M_FR,label=f'{H0[i]:.1f}')
-for i,e in enumerate(ciclos_FR_213):
-    _,_,_, H_FR,M_FR,_ = lector_ciclos(ciclos_FR_213[i])
+
+for i,j in enumerate(ciclos_FR_213):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(j)
     axs[0,1].plot(H_FR/1000,M_FR,label=f'{H0[i]:.1f}')
-for i,e in enumerate(ciclos_FR_135):
-    _,_,_, H_FR,M_FR,_ = lector_ciclos(ciclos_FR_135[i])
+
+for i,k in enumerate(ciclos_FR_135):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(k)
     axs[1,0].plot(H_FR/1000,M_FR,label=f'{H0[i]:.1f}')
-for i,e in enumerate(ciclos_FR_081):
-    _,_,_, H_FR,M_FR,_ = lector_ciclos(ciclos_FR_081[i])
+
+for i,l in enumerate(ciclos_FR_081):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(l)
     axs[1,1].plot(H_FR/1000,M_FR,label=f'{H0[i]:.1f}')
     
     
@@ -268,4 +271,95 @@ for a in axs.flatten():
     a.grid()
     a.legend(loc='upper left',frameon=True,shadow=True,title='H$_0$ (kA/m)',ncol=2)
 plt.suptitle(f'Ciclos promedio FR  [57; 6.9] kA/m')
-# %%
+# %% Comparo a mismo campo
+f=[268,213,135,81]
+
+ciclos_57=[ciclos_FR_268[0],ciclos_FR_213[0],ciclos_FR_135[0],ciclos_FR_081[0]] 
+fig05,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_57):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n57 kA/m')
+plt.show()
+
+
+ciclos_38=[ciclos_FR_268[1],ciclos_FR_213[1],ciclos_FR_135[1],ciclos_FR_081[1]] 
+fig06,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_38):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n 38.5 kA/m')
+plt.show()
+
+ciclos_31=[ciclos_FR_268[2],ciclos_FR_213[2],ciclos_FR_135[2],ciclos_FR_081[2]]
+fig07,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_31):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n 31.5 kA/m')
+plt.show()
+ 
+ciclos_23=[ciclos_FR_268[3],ciclos_FR_213[3],ciclos_FR_135[3],ciclos_FR_081[3]]
+fig08,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_23):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n 23 kA/m')
+plt.show()
+
+ciclos_16=[ciclos_FR_268[4],ciclos_FR_213[4],ciclos_FR_135[4],ciclos_FR_081[4]]
+fig09,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_16):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n 16 kA/m')
+plt.show()
+
+ciclos_7=[ciclos_FR_268[5],ciclos_FR_213[5],ciclos_FR_135[5],ciclos_FR_081[5]]
+fig10,ax=plt.subplots(constrained_layout=True)
+for i,e in enumerate(ciclos_7):
+    _,_,_, H_FR,M_FR,_ = lector_ciclos(e)
+    ax.plot(H_FR/1000,M_FR,'-',label=f'{f[i]}')
+ax.grid()
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (kA/m)')
+ax.legend(loc='upper left',frameon=True,shadow=True,title='f (kHz)',ncol=1)
+plt.suptitle(f'Ciclos promedio FR \n 7 kA/m')
+plt.show()
+
+#%% Salvo todas las figuras de ciclos
+
+fig00.savefig('00_268_ciclos_prom.png',dpi=300)
+fig01.savefig('00_213_ciclos_prom.png',dpi=300)
+fig02.savefig('00_135_ciclos_prom.png',dpi=300)
+fig03.savefig('00_081_ciclos_prom.png',dpi=300)
+
+fig04.savefig('01_comparativa.png',dpi=300)
+
+fig05.savefig('02_57_ciclos_prom.png',dpi=300)
+fig06.savefig('02_38_ciclos_prom.png',dpi=300)
+fig07.savefig('02_31_ciclos_prom.png',dpi=300)
+fig08.savefig('02_23_ciclos_prom.png',dpi=300)
+fig09.savefig('02_16_ciclos_prom.png',dpi=300)
+fig10.savefig('02_7_ciclos_prom.png',dpi=300)
+#%%
