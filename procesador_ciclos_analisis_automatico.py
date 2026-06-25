@@ -708,7 +708,7 @@ fnames_m=np.array(fnames_m)
 
 if detector_ciclos_descartables:
     archivos_in_out=5
-    porcentaje_diferencia=30#%
+    porcentaje_diferencia=20#%
     print(f'Se identifican archivos cuya Mag maxima difieren un {porcentaje_diferencia}% de la')
     print(f'Mag max promedio = {np.mean(Mag_max[archivos_in_out:-archivos_in_out]):.0f}({np.std(Mag_max[archivos_in_out:-archivos_in_out]):.0f}) A/m de los {len(Mag_max[archivos_in_out:-archivos_in_out])} valores centrales.')
 
