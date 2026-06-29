@@ -65,7 +65,7 @@ templog = 0
 N_espiras_bob_captora=1
 nombre='*Ferroresina'
 Analisis_de_Fourier = 1 # sobre las señales, imprime espectro de señal muestra
-N_armonicos_impares = 25
+N_armonicos_impares = 2.3
 concentracion =(10)*1e3 #[concentracion]= g/m^3 (1 g/l == 1e3 g/m^3) (Default = 10000 g/m^3)
 capsula_glucosa=0   # capsula para solventes organicos
 detector_ciclos_descartables=True #en funcion a Mag max para evitar guardar/promediar con ciclos in/out
@@ -495,7 +495,7 @@ for k in range(len(fnames_m)):
     '''
     # MOMENTO FOURIER
     if Analisis_de_Fourier == 1: 
-        _, _, muestra_rec_impar,delta_phi_0,f_0,amp_0,fase_0, espectro_f_amp_fase_m,espectro_ref = fourier_señales_5(t_m_3,Resta_m_3,v_r_m_3,
+        _,_, muestra_rec_impar,delta_phi_0,f_0,amp_0,fase_0, espectro_f_amp_fase_m,espectro_ref = fourier_señales_5(t_m_3,Resta_m_3,v_r_m_3,
                                                                                                         delta_t=delta_t[k],polaridad=polaridad,
                                                                                                         filtro=0.05,frec_limite=2*N_armonicos_impares*frec_final_m,
                                                                                                         name=fnames_m[k])

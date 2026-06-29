@@ -619,4 +619,81 @@ plt.suptitle('Ferroresina\ntau / ESAR / H$_c$  vs Frecuencia',fontsize=15)
 # %% salvo figuras de los resultados
 fig12.savefig('04_tau_ESAR_Hc_vs_H0.png')
 fig13.savefig('05_tau_ESAR_Hc_vs_f.png')
+# %% Comparo analis con datos filtrados a 1er y 3er armonico
+ciclos_300_1 = glob('300_analisis_por_armonico/analisis_1_armonico/**/*ciclo_promedio_H_M.txt',recursive=True)
+resultados_300_1 = glob("300_analisis_por_armonico/analisis_1_armonico/**/*resultados.txt",recursive=True) 
+ciclos_300_1.sort(reverse=True)
+resultados_300_1.sort(reverse=True)
+for p in ciclos_300_1:
+    print('  ',os.path.split(p)[-1])
+print('-'*50)    
+
+for p in resultados_300_1:
+    print('  ',os.path.split(p)[-1])
+print('-'*50)    
+
+#%% 3er armonico
+ciclos_300_3 = glob('300_analisis_por_armonico/analisis_3_armonico/**/*ciclo_promedio_H_M.txt',recursive=True)
+resultados_300_3 = glob("300_analisis_por_armonico/analisis_3_armonico/**/*resultados.txt",recursive=True) 
+ciclos_300_3.sort(reverse=True)
+resultados_300_3.sort(reverse=True)
+for p in ciclos_300_3:
+    print('  ',os.path.split(p)[-1])
+print('-'*50)    
+
+for p in resultados_300_3:
+    print('  ',os.path.split(p)[-1])
+print('-'*50)    
+
 # %%
+idc=[15,10,8,6,4,1.5]
+H0 = [(h*pendiente_HvsI+ordenada_HvsI)/1000 for h in idc]
+
+for i,e in enumerate(ciclos_FR_300):
+    fig, ax =plt.subplots(figsize=(8,6),constrained_layout=True,sharey=True,sharex=True)
+    _,_,_, H_1,M_1,_ = lector_ciclos(ciclos_300_1[i])
+    ax.plot(H_1/1000,M_1,'--',label=f'{H0[i]:.1f}') # Full
+    _,_,_, H_3,M_3,_ = lector_ciclos(ciclos_300_3[i])
+    ax.plot(H_3/1000,M_3,'-.',label=f'{H0[i]:.1f}') # 1 arm
+    _,_,_, H_full,M_full,_ = lector_ciclos(ciclos_FR_300[i])
+    ax.plot(H_full/1000,M_full,'-',label=f'{H0[i]:.1f}') # 3 arm
+    
+    ax.grid()
+    ax.set_ylabel('M (A/m)')
+    ax.set_xlabel('H (kA/m)')
+    ax.set_xlim(0,)
+    ax.set_ylim(0,)
+    ax.legend(loc='upper left',frameon=True,shadow=True,title='H$_0$ (kA/m)\nfull  |  1 arm  |  3 arm  ',ncol=3)
+    plt.suptitle(f'Ciclos promedio FR \n300 kHz H$_0$ = {H0[i]:.1f} kA/m')
+    plt.savefig(f'06_ciclos_por_arm_300_H0_{H0[i]:.0f}.png')
+    plt.show()
+
+# %%
+SAR_300_1, tau_300_1, Hc_300_1 = extraer_SAR_tau(resultados_300_1)
+SAR_300_3, tau_300_3, Hc_300_3 = extraer_SAR_tau(resultados_300_3)
+SAR_300_full, tau_300_full, Hc_300_full = extraer_SAR_tau(resultados_FR_300)
+
+
+fig,ax=plt.subplots(figsize=(8,4),constrained_layout=True)
+
+ax.set_ylabel('Hc (kA/m)')
+
+
+ax.errorbar(H0,unumpy.nominal_values(Hc_300_1),unumpy.std_devs(Hc_300_1),fmt='.-',capsize=4,label='1 arm',zorder=3)
+ax.errorbar(H0,unumpy.nominal_values(Hc_300_3),unumpy.std_devs(Hc_300_3),fmt='.-',capsize=4,label='3 arm',zorder=3)
+ax.errorbar(H0,unumpy.nominal_values(Hc_300_full),unumpy.std_devs(Hc_300_full),fmt='.-',capsize=4,label='full',zorder=3)
+
+
+# ax.errorbar(H0,unumpy.nominal_values(Hc_268),unumpy.std_devs(Hc_268),fmt='.-',capsize=4,label='268')
+# ax.errorbar(H0,unumpy.nominal_values(Hc_213),unumpy.std_devs(Hc_213),fmt='.-',capsize=4,label='213')
+# ax.errorbar(H0,unumpy.nominal_values(Hc_135),unumpy.std_devs(Hc_135),fmt='.-',capsize=4,label='135')
+# ax.errorbar(H0,unumpy.nominal_values(Hc_081),unumpy.std_devs(Hc_081),fmt='.-',capsize=4,label='081')
+
+
+ax.grid()
+ax.legend(title='$f$ (kHz)',loc='upper left',frameon=True,shadow=True,ncol=1)
+# ax.set_xticks([round(h2,1) for h2 in H0[::-1]])
+# ax.tick_params(axis='x')
+ax.set_xlabel('H$_0$ (kA/m)')
+plt.suptitle('Ferroresina\nH$_c$  vs H$_0$',fontsize=14)
+plt.savefig('07_Hc_vs_H0.png')
